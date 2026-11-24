@@ -1,28 +1,211 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stopwatch</title>
+    <meta name="theme-color" content="#090b0a">
+    <title>ChronoX | Racing Stopwatch</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=DM+Mono:wght@400;500&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <link rel="stylesheet" href="task2.css">
 </head>
 <body>
-    <div class="container">
-        <div class="timer-display">
-            00 : 00 : 00 : 00
-        </div>
-        <div class="buttons">
-            <button id="start-timer">Start</button>
-            <button id="pause-timer">Pause</button>
-            <button id="reset-timer">Reset</button>
-            <button id="lap-timer">Lap</button>
-        </div>
-        <div class="laps">
-            <h3>Laps</h3>
-            <ul id="laps-list"></ul>
-        </div>
-    </div>
+
+    <div class="grid-background"></div>
+
+    <main class="dashboard">
+
+        <header class="topbar">
+            <a href="#" class="brand">
+                <span class="brand-mark">C<span>X</span></span>
+                <span class="brand-name">CHRONO<span>X</span></span>
+            </a>
+
+            <div class="session-label">
+                <span class="live-dot"></span>
+                RACE TIMING SYSTEM
+            </div>
+
+            <button id="sound-toggle" class="sound-toggle" type="button" aria-pressed="false">
+                <span id="sound-icon">♫</span>
+                <span id="sound-label">SOUND OFF</span>
+            </button>
+        </header>
+
+        <section class="hero-heading">
+            <div>
+                <p class="section-kicker">PERFORMANCE / TIME / PRECISION</p>
+                <h1>RACE <span>CHRONO</span></h1>
+                <p class="hero-description">Every millisecond makes a difference.</p>
+            </div>
+
+            <div class="session-number">
+                <span>SESSION</span>
+                <strong>01</strong>
+            </div>
+        </section>
+
+        <section class="main-panel">
+
+            <div class="panel-topline">
+                <span><span class="live-dot"></span> LIVE TIMING</span>
+                <span id="timer-status">SYSTEM READY</span>
+            </div>
+
+            <div class="timer-layout">
+
+                <div class="timer-ring">
+                    <svg class="progress-ring" viewBox="0 0 300 300" aria-hidden="true">
+                        <circle class="ring-track" cx="150" cy="150" r="132"></circle>
+                        <circle id="progress-circle" class="ring-progress" cx="150" cy="150" r="132"></circle>
+                    </svg>
+
+                    <div class="ring-content">
+                        <span class="ring-label">ELAPSED TIME</span>
+
+                        <div class="timer-display">
+                            <div class="main-time">
+                                <span id="hours">00</span><span class="colon">:</span><span id="minutes">00</span><span class="colon">:</span><span id="seconds">00</span>
+                            </div>
+                            <div class="millisecond-time">
+                                <span class="decimal">.</span><span id="milliseconds">00</span>
+                            </div>
+                        </div>
+
+                        <span class="timer-caption">HH : MM : SS . MS</span>
+                        <span class="timer-running-indicator">
+                            <span class="live-dot"></span>
+                            <span id="ring-status">STANDBY</span>
+                        </span>
+                    </div>
+                </div>
+
+                <div class="timer-side">
+                    <div class="side-heading">
+                        <span class="section-kicker">CONTROL CENTER</span>
+                        <span class="control-number">01 / 04</span>
+                    </div>
+
+                    <div class="control-buttons">
+                        <button id="start-timer" class="action-btn start-btn" type="button">
+                            <span class="button-symbol">▶</span>
+                            <span>START ENGINE</span>
+                        </button>
+
+                        <button id="pause-timer" class="action-btn pause-btn" type="button" disabled>
+                            <span class="button-symbol">Ⅱ</span>
+                            <span>PAUSE TIMER</span>
+                        </button>
+
+                        <button id="lap-timer" class="action-btn lap-btn" type="button" disabled>
+                            <span class="button-symbol">◎</span>
+                            <span>RECORD LAP</span>
+                        </button>
+
+                        <button id="reset-timer" class="action-btn reset-btn" type="button">
+                            <span class="button-symbol">↻</span>
+                            <span>RESET SESSION</span>
+                        </button>
+                    </div>
+
+                    <div class="shortcut-note">
+                        <span>QUICK CONTROLS</span>
+                        <div><kbd>SPACE</kbd> Start / Pause</div>
+                        <div><kbd>L</kbd> Record lap <kbd>R</kbd> Reset</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="panel-bottomline">
+                <span>CHRONOX PRECISION TIMING</span>
+                <span>TRACK MODE <strong>ACTIVE</strong></span>
+            </div>
+        </section>
+
+        <section class="stats-section">
+            <div class="section-title">
+                <div>
+                    <p class="section-kicker">SESSION TELEMETRY</p>
+                    <h2>PERFORMANCE DATA</h2>
+                </div>
+                <span class="data-tag">LIVE ANALYTICS</span>
+            </div>
+
+            <div class="stats-grid">
+                <article class="stat-card">
+                    <span class="stat-label">TOTAL LAPS</span>
+                    <strong id="total-laps" class="stat-value">00</strong>
+                    <span class="stat-foot">RECORDED SPLITS</span>
+                </article>
+
+                <article class="stat-card fastest-card">
+                    <span class="stat-label">FASTEST LAP</span>
+                    <strong id="best-lap" class="stat-value">--:--.--</strong>
+                    <span class="stat-foot">BEST PERFORMANCE</span>
+                </article>
+
+                <article class="stat-card">
+                    <span class="stat-label">AVERAGE LAP</span>
+                    <strong id="average-lap" class="stat-value">--:--.--</strong>
+                    <span class="stat-foot">SESSION AVERAGE</span>
+                </article>
+
+                <article class="stat-card">
+                    <span class="stat-label">SLOWEST LAP</span>
+                    <strong id="slowest-lap" class="stat-value">--:--.--</strong>
+                    <span class="stat-foot">LONGEST SPLIT</span>
+                </article>
+            </div>
+        </section>
+
+        <section class="laps-section">
+            <div class="section-title">
+                <div>
+                    <p class="section-kicker">SPLIT-BY-SPLIT ANALYSIS</p>
+                    <h2>LAP TELEMETRY</h2>
+                </div>
+
+                <span class="lap-counter" id="lap-count">00 LAPS</span>
+            </div>
+
+            <div class="lap-table">
+                <div class="lap-table-heading">
+                    <span>LAP</span>
+                    <span>LAP TIME</span>
+                    <span>DIFFERENCE</span>
+                    <span>TOTAL TIME</span>
+                    <span>RESULT</span>
+                </div>
+
+                <ul id="laps-list" class="laps-list">
+                    <li class="empty-state">
+                        <span class="empty-symbol">◎</span>
+                        <strong>AWAITING FIRST LAP</strong>
+                        <p>Start the timer and record your first split.</p>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="lap-footer">
+                <span id="lap-insight">NO PERFORMANCE DATA AVAILABLE</span>
+                <button id="clear-laps" class="clear-btn" type="button" disabled>
+                    CLEAR LAP DATA <span>↗</span>
+                </button>
+            </div>
+        </section>
+
+        <footer class="footer">
+            <span>CHRONOX</span>
+            <span>BUILT FOR SPEED. DESIGNED FOR PRECISION.</span>
+            <span>HTML / CSS / JAVASCRIPT</span>
+        </footer>
+
+    </main>
 
     <script src="task2.js"></script>
 </body>
